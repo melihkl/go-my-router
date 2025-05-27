@@ -2,25 +2,21 @@ package handlers
 
 import (
 	"fmt"
-	"io"
 	"net/http"
 )
 
-func HelloHandler(w http.ResponseWriter, r *http.Request, params map[string]string) {
-	name := params["name"]
-	if name == "" {
-		name = "misafir"
-	}
-	fmt.Fprintf(w, "Merhaba %s!\n", name)
+func GetUser(w http.ResponseWriter, req *http.Request, params map[string]string) {
+	fmt.Fprintf(w, "GET user with ID: %s\n", params["id"])
 }
 
-func SubmitHandler(w http.ResponseWriter, r *http.Request, _ map[string]string) {
-	body, err := io.ReadAll(r.Body)
-	if err != nil {
-		http.Error(w, "Body okunamadı", http.StatusBadRequest)
-		return
-	}
-	defer r.Body.Close()
+func CreateUser(w http.ResponseWriter, req *http.Request, _ map[string]string) {
+	fmt.Fprintln(w, "POST create new user")
+}
 
-	fmt.Fprintf(w, "POST verisi alındı: %s\n", string(body))
+func UpdateUser(w http.ResponseWriter, req *http.Request, params map[string]string) {
+	fmt.Fprintf(w, "PUT update user with ID: %s\n", params["id"])
+}
+
+func DeleteUser(w http.ResponseWriter, req *http.Request, params map[string]string) {
+	fmt.Fprintf(w, "DELETE user with ID: %s\n", params["id"])
 }
